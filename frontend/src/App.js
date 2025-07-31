@@ -24,7 +24,7 @@ function App() {
           {investors.map((inv, idx) => (
             <tr key={idx}>
               <td>{inv.investor_name}</td>
-              <td>{inv.total_commitment}</td>
+              <td>£{Number(inv.total_commitment).toLocaleString('en-UK')}</td>
             </tr>
           ))}
         </tbody>

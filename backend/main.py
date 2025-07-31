@@ -1,10 +1,21 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Query
+from fastapi import HTTPException
 from sqlalchemy import create_engine
 import pandas as pd
 
 app = FastAPI()
+
+# CORS middleware to allow requests from the frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # load database (on startup)
 engine = create_engine("sqlite:///data.db")
@@ -30,4 +41,8 @@ def get_commitments(investor_name: str, asset_class: str = Query(default=None)):
         params = (investor_name, asset_class)
 
     df = pd.read_sql(query, engine, params=params)
+    
+    if df.empty:
+        raise HTTPException(status_code=404, detail="Investor or commitments not found.")
+    
     return df.to_dict(orient="records")

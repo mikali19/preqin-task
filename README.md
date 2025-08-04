@@ -28,3 +28,9 @@ npm install
 npm start                             # start server on :3000
 
 # Done: open http://localhost:3000
+
+## 🧪 Running tests
+
+```bash
+cd backend && cd tests
+pytest test_main.py

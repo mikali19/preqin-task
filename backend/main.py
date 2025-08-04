@@ -26,23 +26,53 @@ def read_root():
 
 @app.get("/investors")
 def get_investors():
-    # read from database
-    df = pd.read_sql("SELECT investor_name, SUM(commitment_amount) as total_commitment FROM commitments GROUP BY investor_name", engine)
-    # convert to list of dicts
+    # Get all unique investors with their details
+    df = pd.read_sql("""
+        SELECT DISTINCT 
+            investor_name,
+            investor_type,
+            investor_country,
+            date_added,
+            last_updated
+        FROM commitments
+    """, engine)
     return df.to_dict(orient="records")
 
 @app.get("/investors/{investor_name}/commitments")
-def get_commitments(investor_name: str, asset_class: str = Query(default=None)):
-    query = "SELECT asset_class, commitment_amount FROM commitments WHERE investor_name = ?"
-    params = (investor_name,)
-    
-    if asset_class:
-        query += " AND asset_class = ?"
-        params = (investor_name, asset_class)
-
-    df = pd.read_sql(query, engine, params=params)
+def get_commitments(investor_name: str):
+    # Get all commitments for an investor with full details
+    df = pd.read_sql("""
+        SELECT 
+            asset_class,
+            commitment_amount,
+            currency,
+            date_added,
+            last_updated
+        FROM commitments 
+        WHERE investor_name = ?
+    """, engine, params=(investor_name,))
     
     if df.empty:
         raise HTTPException(status_code=404, detail="Investor or commitments not found.")
     
     return df.to_dict(orient="records")
+
+@app.get("/investors/{investor_name}/details")
+def get_investor_details(investor_name: str):
+    # Get investor metadata
+    df = pd.read_sql("""
+        SELECT DISTINCT
+            investor_name,
+            investor_type,
+            investor_country,
+            date_added,
+            last_updated
+        FROM commitments
+        WHERE investor_name = ?
+        LIMIT 1
+    """, engine, params=(investor_name,))
+    
+    if df.empty:
+        raise HTTPException(status_code=404, detail="Investor not found.")
+    
+    return df.iloc[0].to_dict()

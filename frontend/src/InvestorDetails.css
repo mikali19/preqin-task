@@ -1,0 +1,87 @@
+.investor-header {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.investor-header h2 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.investor-meta {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.investor-meta span {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.commitments-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.commitments-table th {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.commitments-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.commitment-row:hover {
+  background-color: #f8f9fa;
+}
+
+.amount-cell {
+  font-weight: bold;
+  text-align: right;
+}
+
+.filter-container {
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-group label {
+  font-weight: 500;
+}
+
+.filter-group select {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+}
+
+.sort-button {
+  padding: 0.5rem 1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.sort-button:hover {
+  background-color: #2980b9;
+}

@@ -25,6 +25,6 @@ uvicorn main:app --reload                # runs on :8000
 # 3. frontend -------------------------------------------------
 cd ../frontend
 npm install
-npm run dev                              # vite dev server on :3000
+npm start                             # start server on :3000
 
 # Done: open http://localhost:3000
